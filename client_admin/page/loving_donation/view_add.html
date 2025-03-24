@@ -1,0 +1,681 @@
+<!-- 新增/Add -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <link rel="stylesheet" href="../../css/diy.css">
+    <script src="../../js/axios.min.js"></script>
+
+    <style>
+        img {
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+<article class="sign_in">
+    <div class="warp">
+        <div class="layui-container">
+            <div class="layui-row">
+                <form class="layui-form" action="">
+                                                                                                                                                                                                                                                        <div class="layui-form-item" id="donors_box">
+                                                <label class="layui-form-label">捐助人员</label>
+                                                <div class="layui-input-block">
+                                                    <select name="interest" lay-filter="donors"
+                                                            id="donors">
+                                                        <option value=""></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                                                                                                                                                                                                                                                <div class="layui-form-item" id="date_of_donation_box">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">捐助日期</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" class="layui-input" id="date_of_donation"
+                                                       placeholder="yyyy-MM-dd">
+                                            </div>
+                                        </div>
+                                    </div>
+                                                                                                                                                                                                                            <div class="layui-form-item" id="donation_items_box">
+                                            <label class="layui-form-label">捐助物品</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="title" lay-verify="title" autocomplete="off"
+                                                       placeholder="请输入捐助物品"
+                                                       class="layui-input" id="donation_items">
+                                            </div>
+                                        </div>
+                                                                                                                                                                                                                        <div class="layui-form-item" id="number_of_donations_box">
+                                        <label class="layui-form-label">捐助数量</label>
+                                        <div class="layui-input-block">
+                                            <input type="number" name="num" class="layui-input num" id="number_of_donations">
+                                        </div>
+                                    </div>
+                                                                                                                                                                                    <div class="layui-form-item layui-form-text" id="remarks_box">
+                                        <label class="layui-form-label">备注信息</label>
+                                        <div class="layui-input-block">
+                                            <textarea placeholder="请输入备注信息" class="layui-textarea"
+                                                      id="remarks"></textarea>
+                                        </div>
+                                    </div>
+                                                                                                                                    
+                                                
+                        
+                        
+                        
+                                                            </form>
+                <div class="layui-btn-container">
+                    <a href="#" type="button" class="layui-btn layui-btn-normal login" id="submit" >确认/Confirm</a>
+                    <a href="./table.html" target="main_self_frame" type="button"
+                       class="layui-btn layui-btn-normal login">取消/Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+</body>
+<script src="../../layui/layui.js"></script>
+<script src="../../js/base.js"></script>
+<script src="../../js/index.js"></script>
+<script>
+    var BaseUrl = baseUrl()
+    let loving_donation_id = location.search.substring(1)
+    layui.use(['upload', 'element', 'layer', 'laydate', 'layedit'], function () {
+        var $ = layui.jquery
+                , upload = layui.upload
+                , element = layui.element
+                , layer = layui.layer
+                , laydate = layui.laydate
+                , layedit = layui.layedit
+                , form = layui.form;
+
+        let url
+
+        let token = sessionStorage.token || null
+        let personInfo = JSON.parse(sessionStorage.personInfo)
+        let user_group = personInfo.user_group
+        let use_id = personInfo.user_id
+
+        function  $get_stamp() {
+            return new Date().getTime();
+        }
+
+        function  $get_rand(len) {
+            var rand = Math.random();
+            return Math.ceil(rand * 10 ** len);
+        }
+
+        
+            // 权限判断
+            /**
+             * 获取路径对应操作权限 鉴权
+             * @param {String} action 操作名
+             */
+            function $check_action(path1, action = "get") {
+                var o = $get_power(path1);
+                if (o && o[action] != 0 && o[action] != false) {
+                    return true;
+                }
+                return false;
+            }
+
+            /**
+             * 是否有显示或操作字段的权限
+             * @param {String} action 操作名
+             * @param {String} field 查询的字段
+             */
+            function $check_field(action, field, path1) {
+                var o = $get_power(path1);
+                var auth;
+                if (o && o[action] != 0 && o[action] != false) {
+                    auth = o["field_" + action];
+                }
+                if (auth) {
+                    return auth.indexOf(field) !== -1;
+                }
+                return false;
+            }
+
+            /**
+             * 获取权限
+             * @param {String} path 路由路径
+             */
+            function $get_power(path) {
+                var list_data = JSON.parse(sessionStorage.list_data)
+                var list = list_data;
+                var obj;
+                for (var i = 0; i < list.length; i++) {
+                    var o = list[i];
+                    if (o.path === path) {
+                        obj = o;
+                        break;
+                    }
+                }
+                return obj;
+            }
+
+        let submit = document.querySelector('#submit')
+        // 提交按钮校验权限
+        // if (   user_group == "管理员" ||$check_action('/loving_donation/view', 'add') || $check_action('/loving_donation/view', 'set')) {
+        //    submit.style.display = "block"
+        // }
+        // style="display: none"
+
+        
+            let field = "loving_donation_id";
+            let url_add = "loving_donation";
+            let url_set = "loving_donation";
+            let url_get_obj = "loving_donation";
+            let url_upload = "loving_donation"
+            let query = {
+                "loving_donation_id": 0,
+            }
+
+            let form_data2 = {
+                                                            "donors": 0, // 捐助人员
+                                                                            "date_of_donation":  '', // 捐助日期
+                                                                            "donation_items":  '', // 捐助物品
+                                                                            "number_of_donations":  0, // 捐助数量
+                                                                            "remarks":  '', // 备注信息
+                                                                                                                                    "loving_donation_id": 0, // ID
+                                                                                            }
+
+            layui.layedit.set({
+      uploadImage: {
+        url: BaseUrl + '/api/loving_donation/upload?' //接口url
+        , type: 'post' //默认post
+      }
+    });
+
+
+            var path1
+
+            function getpath() {
+                var list_data = JSON.parse(sessionStorage.list_data)
+                for (var i = 0; i < list_data.length; i++) {
+                    var o = list_data[i];
+                    if (o.path === "/loving_donation/table") {
+                        path1 = o.path
+                            $get_power(o.path)
+                    }
+                }
+            }
+
+            getpath()
+
+            /**
+             * 注册时是否有显示或操作字段的权限
+             * @param {String} action 操作名
+             * @param {String} field 查询的字段
+             * @param {String} path 路径
+             */
+            function $check_register_field(action, field, path1) {
+                var o = $get_power(path1);
+                var auth;
+                if (o && o[action] != 0 && o[action] != false) {
+                    auth = o["field_" + action];
+                }
+                if (auth) {
+                    return auth.indexOf(field) !== -1;
+                }
+                return false;
+            }
+
+            /**
+             * 是否有显示或操作字段的权限
+             * @param {String} action 操作名
+             * @param {String} field 查询的字段
+             */
+            function $check_field(action, field) {
+                var o = $get_power("/loving_donation/view");
+                var auth;
+                if (o && o[action] != 0 && o[action] != false) {
+                    auth = o["field_" + action];
+                }
+                if (auth) {
+                    return auth.indexOf(field) !== -1;
+                }
+                return false;
+            }
+
+            /**
+             * 获取路径对应操作权限 鉴权
+             * @param {String} action 操作名
+             */
+            function $check_exam(path1, action = "get") {
+                var o = $get_power(path1);
+                if (o) {
+                    var option = JSON.parse(o.option);
+                    if (option[action])
+                        return true
+                }
+                return false;
+            }
+
+            /**
+             * 是否有审核字段的权限
+             */
+            function $check_examine() {
+                var url = window.location.href;
+                var url_ = url.split("/")
+                var pg_url = url_[url_.length - 2]
+                let path = "/"+ pg_url + "/table"
+                var o = $get_power(path);
+                if (o){
+                    var option = JSON.parse(o.option);
+                    if (option.examine)
+                        return true
+                }
+                return false;
+            }
+
+                            if (user_group === '管理员') {
+                    $("#donors_box").show()
+                } else {
+                    if ($check_field('add', 'donors')){
+                        $("#donors_box").show()
+                    }else {
+                        $("#donors_box").hide()
+                    }
+                }
+                            if (user_group === '管理员') {
+                    $("#date_of_donation_box").show()
+                } else {
+                    if ($check_field('add', 'date_of_donation')){
+                        $("#date_of_donation_box").show()
+                    }else {
+                        $("#date_of_donation_box").hide()
+                    }
+                }
+                            if (user_group === '管理员') {
+                    $("#donation_items_box").show()
+                } else {
+                    if ($check_field('add', 'donation_items')){
+                        $("#donation_items_box").show()
+                    }else {
+                        $("#donation_items_box").hide()
+                    }
+                }
+                            if (user_group === '管理员') {
+                    $("#number_of_donations_box").show()
+                } else {
+                    if ($check_field('add', 'number_of_donations')){
+                        $("#number_of_donations_box").show()
+                    }else {
+                        $("#number_of_donations_box").hide()
+                    }
+                }
+                            if (user_group === '管理员') {
+                    $("#remarks_box").show()
+                } else {
+                    if ($check_field('add', 'remarks')){
+                        $("#remarks_box").show()
+                    }else {
+                        $("#remarks_box").hide()
+                    }
+                }
+            
+                                                                                                                                                                                                                                                                                                                                                                            
+                            
+                            
+                            
+                            
+                            
+            
+                                                                                                                                                                                                
+                                                                                // 日期选择
+                    laydate.render({
+                        elem: '#date_of_donation'
+                        , format: 'yyyy-MM-dd'
+                        , done: function (value) {
+                            form_data2.date_of_donation = value + ' 00:00:00'
+                        }
+                    });
+                
+                                                            
+                                                            
+                                                            
+                                            
+            
+                                            
+                                    async function list_donors() {
+                        var donors = document.querySelector("#donors")
+                        var op1 = document.createElement("option");
+                        op1.value = '0'
+                            donors.appendChild(op1)
+                        // 收集数据 长度
+                        var count
+                        // 收集数据 数组
+                        var arr = []
+                        $.ajax({
+                            url: BaseUrl + '/api/user/get_list?user_group=注册用户',
+                            type: 'GET',
+                            contentType: 'application/json; charset=UTF-8',
+                            async: false,
+                            dataType: 'json',
+                            success: function (response) {
+                                count = response.result.count
+                                arr = response.result.list
+                            }
+                        })
+                        for (var i = 0; i < arr.length; i++) {
+                            var op = document.createElement("option");
+                            // 给节点赋值
+                            op.innerHTML = arr[i].username + "--" + arr[i].nickname
+                            op.value = arr[i].user_id
+                            // 新增/Add节点
+                            donors.appendChild(op)
+                            if (form_data2.donors==arr[i].donors){
+                                op.selected = true
+                            }
+                            layui.form.render("select");
+                        }
+                    }
+
+                    layui.form.on('select(donors)', function (data) {
+                        form_data2.donors = Number(data.elem[data.elem.selectedIndex].value);
+                    })
+                    list_donors()
+                                                            
+                                                            
+                                                            
+                                                            
+                                                    
+                                                                                                                                                                                                                                        //文本
+                    let donation_items = document.querySelector("#donation_items")
+                        donation_items.onkeyup = function (event) {
+                        form_data2.donation_items = event.target.value
+                    }
+                    //文本
+                                                                                                                                                                //数字
+                    let number_of_donations = document.querySelector("#number_of_donations")
+                        number_of_donations.onkeyup = function (event) {
+                        form_data2.number_of_donations = Number(event.target.value)
+                    }
+                    //数字
+                                                                                                                                                //多文本
+                    let remarks = document.querySelector("#remarks")
+                    //多文本
+                                                                                                                                                                                                                                                                                                                                                                                var data = sessionStorage.data || ''
+            if (data !== '') {
+                var data2 = JSON.parse(data)
+                Object.keys(form_data2).forEach(key => {
+                    Object.keys(data2).forEach(dbKey => {
+                        if (key === dbKey) {
+                            if (key!=='examine_state' && key!=='examine_reply'){
+                                $('#' + key).val(data2[key])
+                                form_data2[key] = data2[key]
+                                $('#' + key).attr('disabled', 'disabled')
+                                                                                                        for (let key in form_data2) {
+                                        if (key == 'donors') {
+                                            let alls = document.querySelector('#donors').querySelectorAll('option')
+                                            let test = form_data2[key]
+                                            for (let i = 0; i < alls.length; i++) {
+                                                layui.form.render("select");
+                                                if (alls[i].value == test) {
+                                                    alls[i].selected = true
+                                                    form_data2.donors = alls[i].value
+                                                    layui.form.render("select");
+                                                }
+                                            }
+                                        }
+                                    }
+                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                        }
+                        }
+                    })
+                })
+                sessionStorage.removeItem("data");
+            }
+                                                                                    async function axios_get_4() {
+                            if(user_group !='管理员'){
+                                const {data: rese} = await axios.get(BaseUrl + '/api/user/get_list?user_group=' + user_group)
+                                let data = rese.result.list
+
+                                const {data: ress} = await axios.get(BaseUrl + '/api/user_group/get_obj?name=' + user_group)
+                                const {data: res} = await axios.get(BaseUrl + '/api/' + ress.result.obj.source_table + '/get_obj?user_id=' + use_id)
+                                Object.keys(form_data2).forEach(key => {
+                                    Object.keys(res.result.obj).forEach(dbKey => {
+                                        if (key === dbKey) {
+                                            if (key!=='examine_state' && key!=='examine_reply'){
+                                                $('#' + key).val(res.result.obj[key])
+                                                form_data2[key] = res.result.obj[key]
+                                                $('#' + key).attr('disabled', 'disabled')
+                                            }
+                                        }
+                                    })
+                                })
+
+                                for (let key in res.result.obj) {
+                                    if (key == 'user_id') {
+                                        let alls = document.querySelector('#donors').querySelectorAll('option')
+                                        let test = res.result.obj.user_id
+                                        for (let i = 0; i < alls.length; i++) {
+                                            if (alls[i].value == test) {
+                                                alls[i].selected = true
+                                                $('#donors').attr('disabled', 'disabled')
+                                                form_data2.donors = alls[i].value
+                                                layui.form.render("select");
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        axios_get_4()
+                                                                                                                                                                
+
+            if (loving_donation_id !== '') {
+                async function axios_get_3() {
+                    const {data: rese} = await axios.get(BaseUrl + '/api/loving_donation/get_obj', {
+                        params: {
+                                loving_donation_id: loving_donation_id
+                        }, headers: {
+                            'x-auth-token': token
+                        }
+                    })
+
+                    let data = rese.result.obj
+                    Object.keys(form_data2).forEach((key) => {
+                        form_data2[key] = data[key];
+                        $("#"+key).val(form_data2[key])
+                    });
+
+                    
+
+                                                                        for (let key in data) {
+                                if (key == 'donors') {
+                                    let alls = document.querySelector('#donors').querySelectorAll('option')
+                                    let test = data[key]
+                                    for (let i = 0; i < alls.length; i++) {
+                                        layui.form.render("select");
+                                        if (alls[i].value == test) {
+                                            alls[i].selected = true
+                                            form_data2.donors = alls[i].value
+                                            layui.form.render("select");
+                                        }
+                                    }
+                                }
+                            }
+                        
+                                            
+                                            
+                                            
+                                            
+                                                                                   if (user_group === '管理员') {
+                            $("#donors_box").show()
+                        } else {
+                            if ($check_field('set', 'donors') || $check_field('get', 'donors')){
+                                $("#donors_box").show()
+                            }else {
+                                $("#donors_box").hide()
+                            }
+                        }
+                                            if (user_group === '管理员') {
+                            $("#date_of_donation_box").show()
+                        } else {
+                            if ($check_field('set', 'date_of_donation') || $check_field('get', 'date_of_donation')){
+                                $("#date_of_donation_box").show()
+                            }else {
+                                $("#date_of_donation_box").hide()
+                            }
+                        }
+                                            if (user_group === '管理员') {
+                            $("#donation_items_box").show()
+                        } else {
+                            if ($check_field('set', 'donation_items') || $check_field('get', 'donation_items')){
+                                $("#donation_items_box").show()
+                            }else {
+                                $("#donation_items_box").hide()
+                            }
+                        }
+                                            if (user_group === '管理员') {
+                            $("#number_of_donations_box").show()
+                        } else {
+                            if ($check_field('set', 'number_of_donations') || $check_field('get', 'number_of_donations')){
+                                $("#number_of_donations_box").show()
+                            }else {
+                                $("#number_of_donations_box").hide()
+                            }
+                        }
+                                            if (user_group === '管理员') {
+                            $("#remarks_box").show()
+                        } else {
+                            if ($check_field('set', 'remarks') || $check_field('get', 'remarks')){
+                                $("#remarks_box").show()
+                            }else {
+                                $("#remarks_box").hide()
+                            }
+                        }
+                    
+                    // Array.prototype.slice.call(document.getElementsByTagName('input')).map(i => i.disabled = true)
+                    // Array.prototype.slice.call(document.getElementsByTagName('select')).map(i => i.disabled = true)
+                    // Array.prototype.slice.call(document.getElementsByTagName('textarea')).map(i => i.disabled = true)
+                                                                                            
+                                                    if (user_group === '管理员' || (form_data2['loving_donation_id'] && $check_field('set', 'donors')) || (!form_data2['loving_donation_id'] && $check_field('add', 'donors'))) {
+                            }else {
+                                $("#donors").attr("disabled", true);
+                                $("#donors > input[name='file']").attr('disabled', true);
+                            }
+                                                                                                                    
+                                                    if (user_group === '管理员' || (form_data2['loving_donation_id'] && $check_field('set', 'date_of_donation')) || (!form_data2['loving_donation_id'] && $check_field('add', 'date_of_donation'))) {
+                            }else {
+                                $("#date_of_donation").attr("disabled", true);
+                                $("#date_of_donation > input[name='file']").attr('disabled', true);
+                            }
+                                                                                                //文本
+                                donation_items.value = form_data2.donation_items
+                            //文本
+                                                                        
+                                                    if (user_group === '管理员' || (form_data2['loving_donation_id'] && $check_field('set', 'donation_items')) || (!form_data2['loving_donation_id'] && $check_field('add', 'donation_items'))) {
+                            }else {
+                                $("#donation_items").attr("disabled", true);
+                                $("#donation_items > input[name='file']").attr('disabled', true);
+                            }
+                                                                                                                        //数字
+                                number_of_donations.value = form_data2.number_of_donations
+                            //数字
+                                                
+                                                    if (user_group === '管理员' || (form_data2['loving_donation_id'] && $check_field('set', 'number_of_donations')) || (!form_data2['loving_donation_id'] && $check_field('add', 'number_of_donations'))) {
+                            }else {
+                                $("#number_of_donations").attr("disabled", true);
+                                $("#number_of_donations > input[name='file']").attr('disabled', true);
+                            }
+                                                                                                                                                //多文本
+                                remarks.value = form_data2.remarks
+                            //多文本
+                        
+                                                    if (user_group === '管理员' || (form_data2['loving_donation_id'] && $check_field('set', 'remarks')) || (!form_data2['loving_donation_id'] && $check_field('add', 'remarks'))) {
+                            }else {
+                                $("#remarks").attr("disabled", true);
+                                $("#remarks > input[name='file']").attr('disabled', true);
+                            }
+                                                                                                                                                                                                                                                                                                                                                date_of_donation.value = layui.util.toDateString(form_data2.date_of_donation, "yyyy-MM-dd")
+                                                                                                                                                                                                                                                                                                                                                                                            layui.form.render("select");
+                }
+                axios_get_3()
+            }
+
+
+            
+            submit.onclick = async function () {
+                try {
+                                                                                                                                                                                                                                                            form_data2.date_of_donation = layui.util.toDateString(form_data2.date_of_donation, "yyyy-MM-dd")
+                                                                                                                                                                                                                                //文本
+                            form_data2.donation_items = donation_items.value
+                            //文本
+                                                                                                                                                                        //数字
+                            form_data2.number_of_donations = Number(number_of_donations.value)
+                            //数字
+                                                                                                                                                                            //多文本
+                            form_data2.remarks = remarks.value
+                            //多文本
+                                                                } catch (err) {
+                    console.log(err)
+                }
+                                                                                
+                                                
+                let customize_field = []
+                                                            customize_field.push({"field_name": "捐助人员", "field_value": form_data2.donors});
+                                                                                customize_field.push({
+                            "field_name": "捐助日期",
+                            "field_value": form_data2.date_of_donation,
+                            "type": "date"
+                        });
+                                                                                customize_field.push({"field_name": "捐助物品", "field_value": form_data2.donation_items});
+                                                                                customize_field.push({"field_name": "捐助数量", "field_value": form_data2.number_of_donations});
+                                                                                customize_field.push({"field_name": "备注信息", "field_value": form_data2.remarks});
+                                    
+                
+                if (loving_donation_id == '') {
+                                        console.log("新增/Add")
+                    const {data: res} = await axios.post(BaseUrl + '/api/loving_donation/add?',
+                            form_data2, {
+                                headers: {
+                                    'x-auth-token': token,
+                                    'Content-Type': 'application/json'
+                                }
+                            })
+                                        if (res.result == 1) {
+                        layer.msg('确认/Confirm完毕');
+                        setTimeout(function () {
+                            window.location.replace("./table.html");
+                        }, 1000)
+                    }else {
+              layer.msg(res.error.message);
+            }
+                                    } else {
+                                        console.log("详情/Details")
+                    
+                    const {data: res} = await axios.post(BaseUrl + '/api/loving_donation/set?loving_donation_id=' + loving_donation_id,
+                            form_data2, {
+                                headers: {
+                                    'x-auth-token': token,
+                                    'Content-Type': 'application/json'
+                                }
+                            })
+                    if (res.result == 1) {
+                        layer.msg('确认/Confirm完毕');
+                        setTimeout(function () {
+                            window.location.replace("./table.html");
+                        }, 1000)
+                    }else {
+              layer.msg(res.error.message);
+            }
+                }
+            }
+        
+    })
+    ;
+</script>
+
+</html>

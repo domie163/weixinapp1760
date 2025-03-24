@@ -1,0 +1,340 @@
+{
+	"topWindow": {
+		"path": "windows/page_header.vue",
+		"style": {
+			"height": "60px"
+		},
+		"matchMedia": {
+			"minWidth": 1200 //生效条件，当窗口宽度大于768px时显示
+		}
+	},
+	"pages": [{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "首页"
+			}
+		},
+		{
+			"path" : "pages/webview/webview",
+			"style" :
+			{
+				"navigationBarTitleText": "网址跳转"
+			}
+		},
+		{
+			"path" : "pages/authorization/authorization",
+			"style" :
+			{
+				"navigationBarTitleText": "QQ授权登录",
+				"enablePullDownRefresh": false
+			}
+		},{
+			"path" : "pages/authorization/authorization-weixin",
+			"style" :
+			{
+				"navigationBarTitleText": "微信授权登录",
+				"enablePullDownRefresh": false
+			}
+		},{
+			"path" : "pages/authorization/authorization-weibo",
+			"style" :
+			{
+				"navigationBarTitleText": "微博授权登录",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/comment/edit",
+			"style": {
+				"navigationBarTitleText": "评论"
+			}
+		},
+		{
+			"path": "pages/media/music",
+			"style": {
+				"navigationBarTitleText": "音乐",
+				"backgroundColor": "#000000"
+			}
+		}, {
+			"path": "pages/media/image",
+			"style": {
+				"navigationBarTitleText": "图片预览",
+				"backgroundColor": "#000000"
+			}
+		}, {
+			"path": "pages/media/video",
+			"style": {
+				"navigationBarTitleText": "视频",
+				"backgroundColor": "#000000"
+			}
+		}, {
+			"path": "pages/account/forgot",
+			"style": {
+				"navigationBarTitleText": "找回密码"
+			}
+		}, {
+			"path": "pages/account/login",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
+		},
+		{
+			"path": "pages/account/register",
+			"style": {
+				"navigationBarTitleText": "注册"
+			}
+		},
+		{
+			"path": "pages/article/list",
+			"style": {
+				"navigationBarTitleText": "校园资讯"
+			}
+		},{
+			"path": "pages/article/index",
+			"style": {
+				"navigationBarTitleText": "校园资讯列表"
+			}
+		}, {
+			"path": "pages/article/details",
+			"style": {
+				"navigationBarTitleText": "校园资讯详情"
+			}
+		},
+		{
+			"path": "pages/notice/list",
+			"style": {
+				"navigationBarTitleText": "公告信息列表"
+			}
+		},
+		{
+			"path": "pages/notice/details",
+			"style": {
+				"navigationBarTitleText": "公告信息"
+			}
+		},
+							// 失物广场列表路由
+		{
+			"path": "pages/lost_and_found_square/list",
+			"style": {
+				"navigationBarTitleText": "失物广场列表"
+			}
+		},
+				// 失物广场详情路由
+		{
+			"path": "pages/lost_and_found_square/details",
+			"style": {
+				"navigationBarTitleText": "失物广场"
+			}
+		},
+								// 以物换物列表路由
+		{
+			"path": "pages/barter/list",
+			"style": {
+				"navigationBarTitleText": "以物换物列表"
+			}
+		},
+				// 以物换物详情路由
+		{
+			"path": "pages/barter/details",
+			"style": {
+				"navigationBarTitleText": "以物换物"
+			}
+		},
+				// 爱心捐助编辑路由
+		{
+			"path": "pages/loving_donation/edit",
+			"style": {
+				"navigationBarTitleText": "爱心捐助"
+			}
+		},
+							// 二手物品列表路由
+		{
+			"path": "pages/second_hand_goods/list",
+			"style": {
+				"navigationBarTitleText": "二手物品列表"
+			}
+		},
+				// 二手物品详情路由
+		{
+			"path": "pages/second_hand_goods/details",
+			"style": {
+				"navigationBarTitleText": "二手物品"
+			}
+		},
+				// 购买订单编辑路由
+		{
+			"path": "pages/purchase_order/edit",
+			"style": {
+				"navigationBarTitleText": "购买订单"
+			}
+		},
+						// 注册用户列表路由
+		{
+			"path": "pages/registered_users/table",
+			"style": {
+				"navigationBarTitleText": "注册用户列表"
+			}
+		},
+		// 注册用户编辑路由
+		{
+			"path": "pages/registered_users/view",
+			"style": {
+				"navigationBarTitleText": "注册用户编辑"
+			}
+		},
+				// 失物广场列表路由
+		{
+			"path": "pages/lost_and_found_square/table",
+			"style": {
+				"navigationBarTitleText": "失物广场列表"
+			}
+		},
+		// 失物广场编辑路由
+		{
+			"path": "pages/lost_and_found_square/view",
+			"style": {
+				"navigationBarTitleText": "失物广场编辑"
+			}
+		},
+				// 物品分类列表路由
+		{
+			"path": "pages/item_classification/table",
+			"style": {
+				"navigationBarTitleText": "物品分类列表"
+			}
+		},
+		// 物品分类编辑路由
+		{
+			"path": "pages/item_classification/view",
+			"style": {
+				"navigationBarTitleText": "物品分类编辑"
+			}
+		},
+				// 以物换物列表路由
+		{
+			"path": "pages/barter/table",
+			"style": {
+				"navigationBarTitleText": "以物换物列表"
+			}
+		},
+		// 以物换物编辑路由
+		{
+			"path": "pages/barter/view",
+			"style": {
+				"navigationBarTitleText": "以物换物编辑"
+			}
+		},
+				// 爱心捐助列表路由
+		{
+			"path": "pages/loving_donation/table",
+			"style": {
+				"navigationBarTitleText": "爱心捐助列表"
+			}
+		},
+		// 爱心捐助编辑路由
+		{
+			"path": "pages/loving_donation/view",
+			"style": {
+				"navigationBarTitleText": "爱心捐助编辑"
+			}
+		},
+				// 二手物品列表路由
+		{
+			"path": "pages/second_hand_goods/table",
+			"style": {
+				"navigationBarTitleText": "二手物品列表"
+			}
+		},
+		// 二手物品编辑路由
+		{
+			"path": "pages/second_hand_goods/view",
+			"style": {
+				"navigationBarTitleText": "二手物品编辑"
+			}
+		},
+				// 购买订单列表路由
+		{
+			"path": "pages/purchase_order/table",
+			"style": {
+				"navigationBarTitleText": "购买订单列表"
+			}
+		},
+		// 购买订单编辑路由
+		{
+			"path": "pages/purchase_order/view",
+			"style": {
+				"navigationBarTitleText": "购买订单编辑"
+			}
+		},
+			{
+			"path": "pages/user/collect",
+			"style": {
+				"navigationBarTitleText": "我的收藏"
+			}
+		},
+		{
+			"path": "pages/user/index",
+			"style": {
+				"navigationBarTitleText": "我"
+			}
+		}, {
+			"path": "pages/user/password",
+			"style": {
+				"navigationBarTitleText": "修改密码"
+			}
+		}, {
+			"path": "pages/user/info",
+			"style": {
+				"navigationBarTitleText": "基本信息"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "长盛",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		"app-plus": {
+			"background": "#efeff4"
+		}
+	},
+	"tabBar": {
+		"color": "#8a8a8a",
+		"selectedColor": "#3388FF",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [{
+				"pagePath": "pages/index/index",
+				"text": "首页",
+				"iconPath": "static/img/home_a.png",
+				"selectedIconPath": "static/img/home_b.png"
+			},
+			{
+				"pagePath": "pages/article/index",
+				"text": "校园资讯",
+				"iconPath": "static/img/article_a.png",
+				"selectedIconPath": "static/img/article_b.png"
+			},
+			{
+				"pagePath": "pages/user/index",
+				"text": "我的",
+				"iconPath": "static/img/my_a.png",
+				"selectedIconPath": "static/img/my_b.png"
+			}
+		]
+	},
+	"condition": { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [{
+			"name": "", //模式名称
+			"path": "", //启动页面，必选
+			"query": "" //启动参数，在页面的onLoad函数里面得到
+		}]
+	},
+	"easycom": {
+		"autoscan": true,
+		"custom": {
+			"^mm_(.*)": "@/components/mm_vue_ui/base/mm_$1.vue"
+		}
+	}
+}

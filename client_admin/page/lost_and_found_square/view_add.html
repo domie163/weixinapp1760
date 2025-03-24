@@ -1,0 +1,1122 @@
+<!-- 新增/Add -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <link rel="stylesheet" href="../../css/diy.css">
+    <script src="../../js/axios.min.js"></script>
+
+    <style>
+        img {
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+<article class="sign_in">
+    <div class="warp">
+        <div class="layui-container">
+            <div class="layui-row">
+                <form class="layui-form" action="">
+                                                                                                                                                                                                                                                        <div class="layui-form-item" id="publisher_box">
+                                                <label class="layui-form-label">发布人员</label>
+                                                <div class="layui-input-block">
+                                                    <select name="interest" lay-filter="publisher"
+                                                            id="publisher">
+                                                        <option value=""></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                                                                                                                                                                                                                                                                                        <div class="layui-form-item" id="item_name_box">
+                                            <label class="layui-form-label">物品名称</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="title" lay-verify="title" autocomplete="off"
+                                                       placeholder="请输入物品名称"
+                                                       class="layui-input" id="item_name">
+                                            </div>
+                                        </div>
+                                                                                                                                                                                                                        <div class="layui-form-item" id="item_type_box">
+                                        <label class="layui-form-label">物品类型</label>
+                                        <div class="layui-input-block">
+                                            <select name="interest" lay-filter="item_type" id="item_type">
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                                                                                                                                                                    <div class="layui-upload" id="item_picture_box">
+                                        <button type="button" class="layui-btn" id="item_picture">上传图片</button>
+                                        <div class="layui-upload-list">
+                                            <img class="layui-upload-img" id="item_picture_img">
+                                            <p id="demoText"></p>
+                                        </div>
+                                        <div style="width: 95px;">
+                                            <div class="layui-progress layui-progress-big" lay-showpercent="yes"
+                                                 lay-filter="item_picture">
+                                                <div class="layui-progress-bar" lay-percent=""></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                                                                                                                                                                    <div class="layui-form-item" id="lost_time_box">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">丢失时间</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" class="layui-input" id="lost_time"
+                                                       placeholder="yyyy-MM-dd">
+                                            </div>
+                                        </div>
+                                    </div>
+                                                                                                                                                                                                                            <div class="layui-form-item" id="lost_location_box">
+                                            <label class="layui-form-label">丢失地点</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="title" lay-verify="title" autocomplete="off"
+                                                       placeholder="请输入丢失地点"
+                                                       class="layui-input" id="lost_location">
+                                            </div>
+                                        </div>
+                                                                                                                                                                                                                        <div class="layui-form-item" id="contact_information_box">
+                                        <label class="layui-form-label">手机号码</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="title" lay-verify="phone_number" autocomplete="off"
+                                                   placeholder="请输入手机号码"
+                                                   class="layui-input" id="contact_information">
+                                        </div>
+                                    </div>
+                                                                                                                                                                                    <div class="layui-form-item" id="open_the_reward_offer_box">
+                                        <label class="layui-form-label">开启悬赏</label>
+                                        <div class="layui-input-block">
+                                            <select name="interest" lay-filter="open_the_reward_offer" id="open_the_reward_offer">
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                                                                                                                                                                                                            <div class="layui-form-item" id="reward_price_box">
+                                            <label class="layui-form-label">悬赏价格</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="title" lay-verify="title" autocomplete="off"
+                                                       placeholder="请输入悬赏价格"
+                                                       class="layui-input" id="reward_price">
+                                            </div>
+                                        </div>
+                                                                                                                                                                                                                        <div class="layui-form-item layui-form-text" id="item_description_box">
+                                        <label class="layui-form-label">物品描述</label>
+                                        <div class="layui-input-block">
+                                            <textarea placeholder="请输入物品描述" class="layui-textarea"
+                                                      id="item_description"></textarea>
+                                        </div>
+                                    </div>
+                                                                                                                                    
+                                                
+                        
+                        
+                                                    <div class="layui-form-item">
+                                <label class="layui-form-label">当前位置</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="title" lay-verify="title" autocomplete="off"
+                                           placeholder="当前位置"
+                                           class="layui-input" id="location_address">
+                                    <button type="button" class="layui-btn" id="location_address_button">定位</button>
+                                </div>
+                            </div>
+                        
+                                                            </form>
+                <div class="layui-btn-container">
+                    <a href="#" type="button" class="layui-btn layui-btn-normal login" id="submit" >确认/Confirm</a>
+                    <a href="./table.html" target="main_self_frame" type="button"
+                       class="layui-btn layui-btn-normal login">取消/Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+</body>
+<script src="../../layui/layui.js"></script>
+<script src="../../js/base.js"></script>
+<script src="../../js/index.js"></script>
+<script>
+    var BaseUrl = baseUrl()
+    let lost_and_found_square_id = location.search.substring(1)
+    layui.use(['upload', 'element', 'layer', 'laydate', 'layedit'], function () {
+        var $ = layui.jquery
+                , upload = layui.upload
+                , element = layui.element
+                , layer = layui.layer
+                , laydate = layui.laydate
+                , layedit = layui.layedit
+                , form = layui.form;
+
+        let url
+
+        let token = sessionStorage.token || null
+        let personInfo = JSON.parse(sessionStorage.personInfo)
+        let user_group = personInfo.user_group
+        let use_id = personInfo.user_id
+
+        function  $get_stamp() {
+            return new Date().getTime();
+        }
+
+        function  $get_rand(len) {
+            var rand = Math.random();
+            return Math.ceil(rand * 10 ** len);
+        }
+
+        
+            // 权限判断
+            /**
+             * 获取路径对应操作权限 鉴权
+             * @param {String} action 操作名
+             */
+            function $check_action(path1, action = "get") {
+                var o = $get_power(path1);
+                if (o && o[action] != 0 && o[action] != false) {
+                    return true;
+                }
+                return false;
+            }
+
+            /**
+             * 是否有显示或操作字段的权限
+             * @param {String} action 操作名
+             * @param {String} field 查询的字段
+             */
+            function $check_field(action, field, path1) {
+                var o = $get_power(path1);
+                var auth;
+                if (o && o[action] != 0 && o[action] != false) {
+                    auth = o["field_" + action];
+                }
+                if (auth) {
+                    return auth.indexOf(field) !== -1;
+                }
+                return false;
+            }
+
+            /**
+             * 获取权限
+             * @param {String} path 路由路径
+             */
+            function $get_power(path) {
+                var list_data = JSON.parse(sessionStorage.list_data)
+                var list = list_data;
+                var obj;
+                for (var i = 0; i < list.length; i++) {
+                    var o = list[i];
+                    if (o.path === path) {
+                        obj = o;
+                        break;
+                    }
+                }
+                return obj;
+            }
+
+        let submit = document.querySelector('#submit')
+        // 提交按钮校验权限
+        // if (   user_group == "管理员" ||$check_action('/lost_and_found_square/view', 'add') || $check_action('/lost_and_found_square/view', 'set')) {
+        //    submit.style.display = "block"
+        // }
+        // style="display: none"
+
+        
+            let field = "lost_and_found_square_id";
+            let url_add = "lost_and_found_square";
+            let url_set = "lost_and_found_square";
+            let url_get_obj = "lost_and_found_square";
+            let url_upload = "lost_and_found_square"
+            let query = {
+                "lost_and_found_square_id": 0,
+            }
+
+            let form_data2 = {
+                                                            "publisher": 0, // 发布人员
+                                                                            "item_name":  '', // 物品名称
+                                                                            "item_type":  '', // 物品类型
+                                                                            "item_picture":  '', // 物品图片
+                                                                            "lost_time":  '', // 丢失时间
+                                                                            "lost_location":  '', // 丢失地点
+                                                                            "contact_information":  '', // 联系方式
+                                                                            "open_the_reward_offer":  '', // 开启悬赏
+                                                                            "reward_price":  '', // 悬赏价格
+                                                                            "item_description":  '', // 物品描述
+                                                                                                                        "location_address": "",
+                    "location_lng": "",
+                    "location_lat": "",
+                                                "lost_and_found_square_id": 0, // ID
+                                                                                            }
+
+            layui.layedit.set({
+      uploadImage: {
+        url: BaseUrl + '/api/lost_and_found_square/upload?' //接口url
+        , type: 'post' //默认post
+      }
+    });
+
+
+            var path1
+
+            function getpath() {
+                var list_data = JSON.parse(sessionStorage.list_data)
+                for (var i = 0; i < list_data.length; i++) {
+                    var o = list_data[i];
+                    if (o.path === "/lost_and_found_square/table") {
+                        path1 = o.path
+                            $get_power(o.path)
+                    }
+                }
+            }
+
+            getpath()
+
+            /**
+             * 注册时是否有显示或操作字段的权限
+             * @param {String} action 操作名
+             * @param {String} field 查询的字段
+             * @param {String} path 路径
+             */
+            function $check_register_field(action, field, path1) {
+                var o = $get_power(path1);
+                var auth;
+                if (o && o[action] != 0 && o[action] != false) {
+                    auth = o["field_" + action];
+                }
+                if (auth) {
+                    return auth.indexOf(field) !== -1;
+                }
+                return false;
+            }
+
+            /**
+             * 是否有显示或操作字段的权限
+             * @param {String} action 操作名
+             * @param {String} field 查询的字段
+             */
+            function $check_field(action, field) {
+                var o = $get_power("/lost_and_found_square/view");
+                var auth;
+                if (o && o[action] != 0 && o[action] != false) {
+                    auth = o["field_" + action];
+                }
+                if (auth) {
+                    return auth.indexOf(field) !== -1;
+                }
+                return false;
+            }
+
+            /**
+             * 获取路径对应操作权限 鉴权
+             * @param {String} action 操作名
+             */
+            function $check_exam(path1, action = "get") {
+                var o = $get_power(path1);
+                if (o) {
+                    var option = JSON.parse(o.option);
+                    if (option[action])
+                        return true
+                }
+                return false;
+            }
+
+            /**
+             * 是否有审核字段的权限
+             */
+            function $check_examine() {
+                var url = window.location.href;
+                var url_ = url.split("/")
+                var pg_url = url_[url_.length - 2]
+                let path = "/"+ pg_url + "/table"
+                var o = $get_power(path);
+                if (o){
+                    var option = JSON.parse(o.option);
+                    if (option.examine)
+                        return true
+                }
+                return false;
+            }
+
+                            if (user_group === '管理员') {
+                    $("#publisher_box").show()
+                } else {
+                    if ($check_field('add', 'publisher')){
+                        $("#publisher_box").show()
+                    }else {
+                        $("#publisher_box").hide()
+                    }
+                }
+                            if (user_group === '管理员') {
+                    $("#item_name_box").show()
+                } else {
+                    if ($check_field('add', 'item_name')){
+                        $("#item_name_box").show()
+                    }else {
+                        $("#item_name_box").hide()
+                    }
+                }
+                            if (user_group === '管理员') {
+                    $("#item_type_box").show()
+                } else {
+                    if ($check_field('add', 'item_type')){
+                        $("#item_type_box").show()
+                    }else {
+                        $("#item_type_box").hide()
+                    }
+                }
+                            if (user_group === '管理员') {
+                    $("#item_picture_box").show()
+                } else {
+                    if ($check_field('add', 'item_picture')){
+                        $("#item_picture_box").show()
+                    }else {
+                        $("#item_picture_box").hide()
+                    }
+                }
+                            if (user_group === '管理员') {
+                    $("#lost_time_box").show()
+                } else {
+                    if ($check_field('add', 'lost_time')){
+                        $("#lost_time_box").show()
+                    }else {
+                        $("#lost_time_box").hide()
+                    }
+                }
+                            if (user_group === '管理员') {
+                    $("#lost_location_box").show()
+                } else {
+                    if ($check_field('add', 'lost_location')){
+                        $("#lost_location_box").show()
+                    }else {
+                        $("#lost_location_box").hide()
+                    }
+                }
+                            if (user_group === '管理员') {
+                    $("#contact_information_box").show()
+                } else {
+                    if ($check_field('add', 'contact_information')){
+                        $("#contact_information_box").show()
+                    }else {
+                        $("#contact_information_box").hide()
+                    }
+                }
+                            if (user_group === '管理员') {
+                    $("#open_the_reward_offer_box").show()
+                } else {
+                    if ($check_field('add', 'open_the_reward_offer')){
+                        $("#open_the_reward_offer_box").show()
+                    }else {
+                        $("#open_the_reward_offer_box").hide()
+                    }
+                }
+                            if (user_group === '管理员') {
+                    $("#reward_price_box").show()
+                } else {
+                    if ($check_field('add', 'reward_price')){
+                        $("#reward_price_box").show()
+                    }else {
+                        $("#reward_price_box").hide()
+                    }
+                }
+                            if (user_group === '管理员') {
+                    $("#item_description_box").show()
+                } else {
+                    if ($check_field('add', 'item_description')){
+                        $("#item_description_box").show()
+                    }else {
+                        $("#item_description_box").hide()
+                    }
+                }
+            
+                                                                                                                                                                                                                                                                                            //常规使用 - 普通图片上传
+                        var uploadInst = upload.render({
+                            elem: '#item_picture'
+                            , url: BaseUrl + '/api/lost_and_found_square/upload?' //此处用的是第三方的 http 请求演示，实际使用时改成您自己的上传接口即可。
+                            , headers: {
+                                'x-auth-token': token
+                            }, before: function (obj) {
+                                //预读本地文件示例，不支持ie8
+                                obj.preview(function (index, file, result) {
+                                    $('#item_picture_img').attr('src', fullUrl(BaseUrl,result)); //图片链接（base64）
+                                });
+
+                                element.progress('item_picture', '0%'); //进度条复位
+                                layer.msg('上传中', {icon: 16, time: 0});
+                            }
+                            , done: function (res) {
+                                //如果上传失败
+                                if (res.code > 0) {
+                                    return layer.msg('上传失败');
+                                }
+                                //上传成功的一些操作
+                                //……
+                                form_data2.item_picture = res.result.url
+                                $('#demoText').html(''); //置空上传失败的状态
+                            }
+                            , error: function () {
+                                //演示失败状态，并实现重传
+                                var demoText = $('#demoText');
+                                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                                demoText.find('.demo-reload').on('click', function () {
+                                    uploadInst.upload();
+                                });
+                            }
+                            //进度条
+                            , progress: function (n, elem, e) {
+                                element.progress('item_picture', n + '%'); //可配合 layui 进度条元素使用
+                                if (n == 100) {
+                                    layer.msg('上传完毕', {icon: 1});
+                                }
+                            }
+                        });
+                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+                            
+                            
+                                                // 物品类型选项列表
+                    let item_type_data = [""];
+                
+                            
+                            
+                            
+                            
+                                                // 开启悬赏选项列表
+                    let open_the_reward_offer_data = ['是','否'];
+                
+                            
+                            
+            
+                                                                                                                                                                                                                                                                                                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                    laydate.render({
+                        elem: '#lost_time'
+                        , type: 'datetime'
+                        , done: function (value) {
+                            console.log(value)
+                            form_data2.lost_time = value
+                        }
+                    });
+                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                            
+            
+                                            
+                                    async function list_publisher() {
+                        var publisher = document.querySelector("#publisher")
+                        var op1 = document.createElement("option");
+                        op1.value = '0'
+                            publisher.appendChild(op1)
+                        // 收集数据 长度
+                        var count
+                        // 收集数据 数组
+                        var arr = []
+                        $.ajax({
+                            url: BaseUrl + '/api/user/get_list?user_group=注册用户',
+                            type: 'GET',
+                            contentType: 'application/json; charset=UTF-8',
+                            async: false,
+                            dataType: 'json',
+                            success: function (response) {
+                                count = response.result.count
+                                arr = response.result.list
+                            }
+                        })
+                        for (var i = 0; i < arr.length; i++) {
+                            var op = document.createElement("option");
+                            // 给节点赋值
+                            op.innerHTML = arr[i].username + "--" + arr[i].nickname
+                            op.value = arr[i].user_id
+                            // 新增/Add节点
+                            publisher.appendChild(op)
+                            if (form_data2.publisher==arr[i].publisher){
+                                op.selected = true
+                            }
+                            layui.form.render("select");
+                        }
+                    }
+
+                    layui.form.on('select(publisher)', function (data) {
+                        form_data2.publisher = Number(data.elem[data.elem.selectedIndex].value);
+                    })
+                    list_publisher()
+                                                            
+                                                                async function item_type() {
+                        var item_type = document.querySelector("#item_type")
+                        var op1 = document.createElement("option");
+                        op1.value = '0'
+                            item_type.appendChild(op1)
+                        // 收集数据 长度
+                        var count
+                        // 收集数据 数组
+                        var arr = []
+                        let {data: res} = await axios.get(BaseUrl + '/api/item_classification/get_list')
+                        count = res.result.count
+                        arr = res.result.list
+                        for (var i = 0; i < arr.length; i++) {
+                            var op = document.createElement("option");
+
+                            // 给节点赋值
+                            op.innerHTML = arr[i].item_type
+                            op.value = i + 1
+                            // 新增/Add节点
+                            item_type.appendChild(op)
+                            if (form_data2.item_type==arr[i].item_type){
+                                op.selected = true
+                            }
+                            layui.form.render("select");
+                        }
+                    }
+
+                    layui.form.on('select(item_type)', function (data) {
+                        form_data2.item_type = data.elem[data.elem.selectedIndex].text;
+                    })
+                        item_type()
+                                
+                                                            
+                                                            
+                                                            
+                                                            
+                                                                                async function open_the_reward_offer() {
+                        var open_the_reward_offer = document.querySelector("#open_the_reward_offer")
+                        var op1 = document.createElement("option");
+                        op1.value = '0'
+                            open_the_reward_offer.appendChild(op1)
+                        // 收集数据 长度
+                        var count
+                        // 收集数据 数组
+                        var arr = []
+                        count = open_the_reward_offer_data.length
+                        arr = open_the_reward_offer_data
+                        for (var i = 0; i < arr.length; i++) {
+                            var op = document.createElement("option");
+                            // 给节点赋值
+                            op.innerHTML = arr[i]
+                            op.value = arr[i]
+                            // 新增/Add节点
+                            open_the_reward_offer.appendChild(op)
+                            if (form_data2.open_the_reward_offer==arr[i].open_the_reward_offer){
+                                op.selected = true
+                            }
+                            layui.form.render("select");
+                        }
+                    }
+
+                    layui.form.on('select(open_the_reward_offer)', function (data) {
+                        form_data2.open_the_reward_offer = data.elem[data.elem.selectedIndex].text;
+                    })
+                        open_the_reward_offer()
+                
+                                                            
+                                                            
+                                                    
+                                                                                                                                            //文本
+                    let item_name = document.querySelector("#item_name")
+                        item_name.onkeyup = function (event) {
+                        form_data2.item_name = event.target.value
+                    }
+                    //文本
+                                                                                                                                                                                                                                                                                                                                                                                                                    //文本
+                    let lost_location = document.querySelector("#lost_location")
+                        lost_location.onkeyup = function (event) {
+                        form_data2.lost_location = event.target.value
+                    }
+                    //文本
+                                                                                                                                                                                                                                                                                                                        //文本
+                    let reward_price = document.querySelector("#reward_price")
+                        reward_price.onkeyup = function (event) {
+                        form_data2.reward_price = event.target.value
+                    }
+                    //文本
+                                                                                                                                                                                //多文本
+                    let item_description = document.querySelector("#item_description")
+                    //多文本
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                var data = sessionStorage.data || ''
+            if (data !== '') {
+                var data2 = JSON.parse(data)
+                Object.keys(form_data2).forEach(key => {
+                    Object.keys(data2).forEach(dbKey => {
+                        if (key === dbKey) {
+                            if (key!=='examine_state' && key!=='examine_reply'){
+                                $('#' + key).val(data2[key])
+                                form_data2[key] = data2[key]
+                                $('#' + key).attr('disabled', 'disabled')
+                                                                                                        for (let key in form_data2) {
+                                        if (key == 'publisher') {
+                                            let alls = document.querySelector('#publisher').querySelectorAll('option')
+                                            let test = form_data2[key]
+                                            for (let i = 0; i < alls.length; i++) {
+                                                layui.form.render("select");
+                                                if (alls[i].value == test) {
+                                                    alls[i].selected = true
+                                                    form_data2.publisher = alls[i].value
+                                                    layui.form.render("select");
+                                                }
+                                            }
+                                        }
+                                    }
+                                
+                                                                
+                                                                                                    for (let key in form_data2) {
+                                        if (key == 'item_type') {
+                                            let alls = document.querySelector('#item_type').querySelectorAll('option')
+                                            let test = form_data2[key]
+                                            for (let i = 0; i < alls.length; i++) {
+                                                if (alls[i].innerHTML == test) {
+                                                    alls[i].selected = true
+                                                    form_data2.item_type = alls[i].text
+                                                    console.log(222)
+                                                    layui.form.render("select");
+                                                }
+                                            }
+                                        }
+                                    }
+                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                                                        for (let key in form_data2) {
+                                            if (key == 'open_the_reward_offer') {
+                                                let alls = document.querySelector('#open_the_reward_offer').querySelectorAll('option')
+                                                let test = form_data2[key]
+                                            for (let i = 0; i < alls.length; i++) {
+                                                if (alls[i].innerHTML == test) {
+                                                    alls[i].selected = true
+                                                    form_data2.open_the_reward_offer = alls[i].text
+                                                    layui.form.render("select");
+                                                }
+                                            }
+                                        }
+                                    }
+                                
+                                                                
+                                                                
+                                                        }
+                        }
+                    })
+                })
+                sessionStorage.removeItem("data");
+            }
+                                                                                    async function axios_get_4() {
+                            if(user_group !='管理员'){
+                                const {data: rese} = await axios.get(BaseUrl + '/api/user/get_list?user_group=' + user_group)
+                                let data = rese.result.list
+
+                                const {data: ress} = await axios.get(BaseUrl + '/api/user_group/get_obj?name=' + user_group)
+                                const {data: res} = await axios.get(BaseUrl + '/api/' + ress.result.obj.source_table + '/get_obj?user_id=' + use_id)
+                                Object.keys(form_data2).forEach(key => {
+                                    Object.keys(res.result.obj).forEach(dbKey => {
+                                        if (key === dbKey) {
+                                            if (key!=='examine_state' && key!=='examine_reply'){
+                                                $('#' + key).val(res.result.obj[key])
+                                                form_data2[key] = res.result.obj[key]
+                                                $('#' + key).attr('disabled', 'disabled')
+                                            }
+                                        }
+                                    })
+                                })
+
+                                for (let key in res.result.obj) {
+                                    if (key == 'user_id') {
+                                        let alls = document.querySelector('#publisher').querySelectorAll('option')
+                                        let test = res.result.obj.user_id
+                                        for (let i = 0; i < alls.length; i++) {
+                                            if (alls[i].value == test) {
+                                                alls[i].selected = true
+                                                $('#publisher').attr('disabled', 'disabled')
+                                                form_data2.publisher = alls[i].value
+                                                layui.form.render("select");
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        axios_get_4()
+                                                                                                                                                                                                                                                                                                            
+
+            if (lost_and_found_square_id !== '') {
+                async function axios_get_3() {
+                    const {data: rese} = await axios.get(BaseUrl + '/api/lost_and_found_square/get_obj', {
+                        params: {
+                                lost_and_found_square_id: lost_and_found_square_id
+                        }, headers: {
+                            'x-auth-token': token
+                        }
+                    })
+
+                    let data = rese.result.obj
+                    Object.keys(form_data2).forEach((key) => {
+                        form_data2[key] = data[key];
+                        $("#"+key).val(form_data2[key])
+                    });
+
+                    
+
+                                                                        for (let key in data) {
+                                if (key == 'publisher') {
+                                    let alls = document.querySelector('#publisher').querySelectorAll('option')
+                                    let test = data[key]
+                                    for (let i = 0; i < alls.length; i++) {
+                                        layui.form.render("select");
+                                        if (alls[i].value == test) {
+                                            alls[i].selected = true
+                                            form_data2.publisher = alls[i].value
+                                            layui.form.render("select");
+                                        }
+                                    }
+                                }
+                            }
+                        
+                                            
+                                                                        for (let key in data) {
+                                if (key == 'item_type') {
+                                    let alls = document.querySelector('#item_type').querySelectorAll('option')
+                                    let test = data[key]
+                                    for (let i = 0; i < alls.length; i++) {
+                                        if (alls[i].innerHTML == test) {
+                                            alls[i].selected = true
+                                            form_data2.item_type = alls[i].text
+                                            console.log(222)
+                                            layui.form.render("select");
+                                        }
+                                    }
+                                }
+                            }
+                        
+                                            
+                                            
+                                            
+                                            
+                                                                        for (let key in data) {
+                                if (key == 'open_the_reward_offer') {
+                                    let alls = document.querySelector('#open_the_reward_offer').querySelectorAll('option')
+                                    let test = data[key]
+                                    for (let i = 0; i < alls.length; i++) {
+                                        if (alls[i].innerHTML == test) {
+                                            alls[i].selected = true
+                                            form_data2.open_the_reward_offer = alls[i].text
+                                            layui.form.render("select");
+                                        }
+                                    }
+                                }
+                            }
+                        
+                                            
+                                            
+                                                                                   if (user_group === '管理员') {
+                            $("#publisher_box").show()
+                        } else {
+                            if ($check_field('set', 'publisher') || $check_field('get', 'publisher')){
+                                $("#publisher_box").show()
+                            }else {
+                                $("#publisher_box").hide()
+                            }
+                        }
+                                            if (user_group === '管理员') {
+                            $("#item_name_box").show()
+                        } else {
+                            if ($check_field('set', 'item_name') || $check_field('get', 'item_name')){
+                                $("#item_name_box").show()
+                            }else {
+                                $("#item_name_box").hide()
+                            }
+                        }
+                                            if (user_group === '管理员') {
+                            $("#item_type_box").show()
+                        } else {
+                            if ($check_field('set', 'item_type') || $check_field('get', 'item_type')){
+                                $("#item_type_box").show()
+                            }else {
+                                $("#item_type_box").hide()
+                            }
+                        }
+                                            if (user_group === '管理员') {
+                            $("#item_picture_box").show()
+                        } else {
+                            if ($check_field('set', 'item_picture') || $check_field('get', 'item_picture')){
+                                $("#item_picture_box").show()
+                            }else {
+                                $("#item_picture_box").hide()
+                            }
+                        }
+                                            if (user_group === '管理员') {
+                            $("#lost_time_box").show()
+                        } else {
+                            if ($check_field('set', 'lost_time') || $check_field('get', 'lost_time')){
+                                $("#lost_time_box").show()
+                            }else {
+                                $("#lost_time_box").hide()
+                            }
+                        }
+                                            if (user_group === '管理员') {
+                            $("#lost_location_box").show()
+                        } else {
+                            if ($check_field('set', 'lost_location') || $check_field('get', 'lost_location')){
+                                $("#lost_location_box").show()
+                            }else {
+                                $("#lost_location_box").hide()
+                            }
+                        }
+                                            if (user_group === '管理员') {
+                            $("#contact_information_box").show()
+                        } else {
+                            if ($check_field('set', 'contact_information') || $check_field('get', 'contact_information')){
+                                $("#contact_information_box").show()
+                            }else {
+                                $("#contact_information_box").hide()
+                            }
+                        }
+                                            if (user_group === '管理员') {
+                            $("#open_the_reward_offer_box").show()
+                        } else {
+                            if ($check_field('set', 'open_the_reward_offer') || $check_field('get', 'open_the_reward_offer')){
+                                $("#open_the_reward_offer_box").show()
+                            }else {
+                                $("#open_the_reward_offer_box").hide()
+                            }
+                        }
+                                            if (user_group === '管理员') {
+                            $("#reward_price_box").show()
+                        } else {
+                            if ($check_field('set', 'reward_price') || $check_field('get', 'reward_price')){
+                                $("#reward_price_box").show()
+                            }else {
+                                $("#reward_price_box").hide()
+                            }
+                        }
+                                            if (user_group === '管理员') {
+                            $("#item_description_box").show()
+                        } else {
+                            if ($check_field('set', 'item_description') || $check_field('get', 'item_description')){
+                                $("#item_description_box").show()
+                            }else {
+                                $("#item_description_box").hide()
+                            }
+                        }
+                    
+                    // Array.prototype.slice.call(document.getElementsByTagName('input')).map(i => i.disabled = true)
+                    // Array.prototype.slice.call(document.getElementsByTagName('select')).map(i => i.disabled = true)
+                    // Array.prototype.slice.call(document.getElementsByTagName('textarea')).map(i => i.disabled = true)
+                                                                                            
+                                                    if (user_group === '管理员' || (form_data2['lost_and_found_square_id'] && $check_field('set', 'publisher')) || (!form_data2['lost_and_found_square_id'] && $check_field('add', 'publisher'))) {
+                            }else {
+                                $("#publisher").attr("disabled", true);
+                                $("#publisher > input[name='file']").attr('disabled', true);
+                            }
+                                                                                                //文本
+                                item_name.value = form_data2.item_name
+                            //文本
+                                                                        
+                                                    if (user_group === '管理员' || (form_data2['lost_and_found_square_id'] && $check_field('set', 'item_name')) || (!form_data2['lost_and_found_square_id'] && $check_field('add', 'item_name'))) {
+                            }else {
+                                $("#item_name").attr("disabled", true);
+                                $("#item_name > input[name='file']").attr('disabled', true);
+                            }
+                                                                                                                    
+                                                    if (user_group === '管理员' || (form_data2['lost_and_found_square_id'] && $check_field('set', 'item_type')) || (!form_data2['lost_and_found_square_id'] && $check_field('add', 'item_type'))) {
+                            }else {
+                                $("#item_type").attr("disabled", true);
+                                $("#item_type > input[name='file']").attr('disabled', true);
+                            }
+                                                                                                                    
+                                                    if (user_group === '管理员' || (form_data2['lost_and_found_square_id'] && $check_field('set', 'item_picture')) || (!form_data2['lost_and_found_square_id'] && $check_field('add', 'item_picture'))) {
+                            }else {
+                                $("#item_picture").attr("disabled", true);
+                                $("#item_picture > input[name='file']").attr('disabled', true);
+                            }
+                                                                                                                    
+                                                    if (user_group === '管理员' || (form_data2['lost_and_found_square_id'] && $check_field('set', 'lost_time')) || (!form_data2['lost_and_found_square_id'] && $check_field('add', 'lost_time'))) {
+                            }else {
+                                $("#lost_time").attr("disabled", true);
+                                $("#lost_time > input[name='file']").attr('disabled', true);
+                            }
+                                                                                                //文本
+                                lost_location.value = form_data2.lost_location
+                            //文本
+                                                                        
+                                                    if (user_group === '管理员' || (form_data2['lost_and_found_square_id'] && $check_field('set', 'lost_location')) || (!form_data2['lost_and_found_square_id'] && $check_field('add', 'lost_location'))) {
+                            }else {
+                                $("#lost_location").attr("disabled", true);
+                                $("#lost_location > input[name='file']").attr('disabled', true);
+                            }
+                                                                                                                    
+                                                    if (user_group === '管理员' || (form_data2['lost_and_found_square_id'] && $check_field('set', 'contact_information')) || (!form_data2['lost_and_found_square_id'] && $check_field('add', 'contact_information'))) {
+                            }else {
+                                $("#contact_information").attr("disabled", true);
+                                $("#contact_information > input[name='file']").attr('disabled', true);
+                            }
+                                                                                                                    
+                                                    if (user_group === '管理员' || (form_data2['lost_and_found_square_id'] && $check_field('set', 'open_the_reward_offer')) || (!form_data2['lost_and_found_square_id'] && $check_field('add', 'open_the_reward_offer'))) {
+                            }else {
+                                $("#open_the_reward_offer").attr("disabled", true);
+                                $("#open_the_reward_offer > input[name='file']").attr('disabled', true);
+                            }
+                                                                                                //文本
+                                reward_price.value = form_data2.reward_price
+                            //文本
+                                                                        
+                                                    if (user_group === '管理员' || (form_data2['lost_and_found_square_id'] && $check_field('set', 'reward_price')) || (!form_data2['lost_and_found_square_id'] && $check_field('add', 'reward_price'))) {
+                            }else {
+                                $("#reward_price").attr("disabled", true);
+                                $("#reward_price > input[name='file']").attr('disabled', true);
+                            }
+                                                                                                                                                //多文本
+                                item_description.value = form_data2.item_description
+                            //多文本
+                        
+                                                    if (user_group === '管理员' || (form_data2['lost_and_found_square_id'] && $check_field('set', 'item_description')) || (!form_data2['lost_and_found_square_id'] && $check_field('add', 'item_description'))) {
+                            }else {
+                                $("#item_description").attr("disabled", true);
+                                $("#item_description > input[name='file']").attr('disabled', true);
+                            }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            let item_picture_img = document.querySelector("#item_picture_img")
+                                    item_picture_img.src = fullUrl(BaseUrl,form_data2.item_picture)
+                                                                                                                                                                lost_time.value = layui.util.toDateString(form_data2.lost_time, "yyyy-MM-dd HH:mm:ss")
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            layui.form.render("select");
+                }
+                axios_get_3()
+            }
+
+
+                            let location_address_button = document.querySelector('#location_address_button')
+                location_address_button.onclick = async function () {
+                    form_data2.location_address = "广东省深圳市南山区科技园";
+                    form_data2.location_lng = "113.946782";
+                    form_data2.location_lat = "22.556481";
+                    let location_address = document.querySelector("#location_address")
+                    location_address.value = "广东省深圳市南山区科技园"
+                    //如果该对象存在，那么地理位置服务可用。
+                    if ('geolocation' in navigator) {
+                        /* 地理位置服务可用 */
+                        let options = {
+                            enableHighAccuracy: true, //布尔值，表示系统是否使用最高精度来表示结果，注意，这会导致较慢的响应时间或者增加电量消耗（比如对于支持gps的移动设备来说）。如果值为false ，设备会通过更快响应以及/或者使用更少的电量等方法来尽可能的节约资源。默认值fasle
+                            timeout: 5000, //它表明的是设备必须在多长时间（单位毫秒）内返回一个位置。默认直到获取到位置才会返回值。
+                            maximumAge: 0 //表明可以返回多长时间（即最长年龄，单位毫秒）内的可获取的缓存位置。如果设置为 0, 说明设备不能使用一个缓存位置，而且必须去获取一个真实的当前位置。默认0
+                        }
+                        function success(position) {
+                            //position.coords (只读) 返回一个定义了当前位置的Coordinates对象。
+                            //position.timestamp (只读) 返回一个时间戳DOMTimeStamp， 这个时间戳表示获取到的位置的时间。
+                            let lat = position.coords.latitude //当前位置的纬度
+                            let lng = position.coords.longitude //当前位置精度
+                            let location=lng+","+lat;
+                            let url = "http://restapi.amap.com/v3/geocode/regeo?key=b6eb2819a6ba4c5119591614272fe7ca&location="+location;
+                            $.ajax({
+                                url: url,
+                                type: "get",
+                                async: false,
+                                success: function (data) {
+                                    if (data.status === '1') {
+                                        form_data2.location_address = data.regeocode.formatted_address;
+                                        form_data2.location_lng = JSON.stringify(lng);
+                                        form_data2.location_lat = JSON.stringify(lat);
+                                        location_address.value = form_data2.location_address
+                                    } else {
+                                        console.log(data.info)
+                                    }
+                                }
+                            });
+                        }
+                        function error(err) {
+                            let errorType = ['您拒绝共享位置信息', '获取不到位置信息', '获取位置信息超时']
+                            console.log(errorType[err.code - 1])
+                        }
+                        navigator.geolocation.getCurrentPosition(success, error, options)
+                    } else {
+                        /* 地理位置服务不可用 */
+                        console.log('无法获取您的位置，请检查定位是否开启或刷新重试')
+                    }
+                }
+            
+            submit.onclick = async function () {
+                try {
+                                                                                                                                                                                                                                                                                                        //文本
+                            form_data2.item_name = item_name.value
+                            //文本
+                                                                                                                                                                                                                                                                                                                                                                                                        form_data2.lost_time = layui.util.toDateString(form_data2.lost_time, "yyyy-MM-dd HH:mm:ss")
+                                                                                                                                                                                                                                //文本
+                            form_data2.lost_location = lost_location.value
+                            //文本
+                                                                                                                                                                                                                                                                                                                                                                                                                        //文本
+                            form_data2.reward_price = reward_price.value
+                            //文本
+                                                                                                                                                                        //多文本
+                            form_data2.item_description = item_description.value
+                            //多文本
+                                                                } catch (err) {
+                    console.log(err)
+                }
+                                                                    let location_address = document.querySelector("#location_address")
+                    form_data2.location_address = location_address.value
+                                                
+                                                
+                let customize_field = []
+                                                            customize_field.push({"field_name": "发布人员", "field_value": form_data2.publisher});
+                                                                                customize_field.push({"field_name": "物品名称", "field_value": form_data2.item_name});
+                                                                                customize_field.push({"field_name": "物品类型", "field_value": form_data2.item_type});
+                                                                                customize_field.push({
+                            "field_name": "物品图片",
+                            "field_value": form_data2.item_picture,
+                            "type": "image"
+                        });
+                                                                                customize_field.push({
+                            "field_name": "丢失时间",
+                            "field_value": form_data2.lost_time,
+                            "type": "datetime"
+                        });
+                                                                                customize_field.push({"field_name": "丢失地点", "field_value": form_data2.lost_location});
+                                                                                customize_field.push({"field_name": "联系方式", "field_value": form_data2.contact_information});
+                                                                                customize_field.push({"field_name": "开启悬赏", "field_value": form_data2.open_the_reward_offer});
+                                                                                customize_field.push({"field_name": "悬赏价格", "field_value": form_data2.reward_price});
+                                                                                customize_field.push({"field_name": "物品描述", "field_value": form_data2.item_description});
+                                    
+                
+                if (lost_and_found_square_id == '') {
+                                        console.log("新增/Add")
+                    const {data: res} = await axios.post(BaseUrl + '/api/lost_and_found_square/add?',
+                            form_data2, {
+                                headers: {
+                                    'x-auth-token': token,
+                                    'Content-Type': 'application/json'
+                                }
+                            })
+                                        if (res.result == 1) {
+                        layer.msg('确认/Confirm完毕');
+                        setTimeout(function () {
+                            window.location.replace("./table.html");
+                        }, 1000)
+                    }else {
+              layer.msg(res.error.message);
+            }
+                                    } else {
+                                        console.log("详情/Details")
+                    
+                    const {data: res} = await axios.post(BaseUrl + '/api/lost_and_found_square/set?lost_and_found_square_id=' + lost_and_found_square_id,
+                            form_data2, {
+                                headers: {
+                                    'x-auth-token': token,
+                                    'Content-Type': 'application/json'
+                                }
+                            })
+                    if (res.result == 1) {
+                        layer.msg('确认/Confirm完毕');
+                        setTimeout(function () {
+                            window.location.replace("./table.html");
+                        }, 1000)
+                    }else {
+              layer.msg(res.error.message);
+            }
+                }
+            }
+        
+    })
+    ;
+</script>
+
+</html>
